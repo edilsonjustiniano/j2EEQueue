@@ -1,0 +1,40 @@
+apply plugin: 'ear'
+
+def wildflyHomeDir = System.getenv('WILDFLY_HOME')
+
+dependencies {
+	 deploy project(path: ':queue-war', configuration: 'archives')
+	 deploy project(path: ':queue-ejb')
+	 
+	 earlib project(':queue-api')
+	 earlib project(':queue-core')
+	 earlib project(':queue-ejb-client')
+}
+ear {
+	deploymentDescriptor {
+         def warName = project(':queue-war').name
+         def warVersion = project(':queue-war').version
+         def warFileName = warName + '-' + warVersion + '.war'
+         webModule(warFileName, 'queue')
+         
+         def ejbName = project(':queue-ejb').name
+         def ejbVersion = project(':queue-ejb').version
+         def ejbFileName = ejbName + "-" + ejbVersion + ".jar"
+         module(ejbFileName, 'ejb')
+   	} 
+}
+
+task deploy(type: Copy) {
+    group 'Custom tasks for development uses'
+    description 'Deploy the EAR file into Wildfly Application Server'
+    
+    def earName = project(':queue-ear').name
+    def earVersion = project(':queue-ear').version
+    def earFileName = earName + '-' + earVersion + '.ear'
+         
+	from project.buildDir.path + "/libs/" + earFileName
+    
+	into "${wildflyHomeDir}/standalone/deployments"
+}
+
+deploy.dependsOn build

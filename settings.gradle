@@ -1,0 +1,8 @@
+include 'queue-api'
+include 'queue-core'
+include 'queue-ejb'
+include 'queue-ejb-client'
+include 'queue-ear'
+include 'queue-war'
+
+rootProject.name = 'j2EEQueue'
