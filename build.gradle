@@ -3,11 +3,12 @@ subprojects {
     apply plugin: 'eclipse'
 
     repositories {
-         mavenCentral()
+        mavenLocal() 
+        mavenCentral()
     }
 
     configurations {
-		provided
+        provided
     }
 
     sourceSets {
@@ -30,6 +31,8 @@ subprojects {
     dependencies {
          testCompile 'junit:junit:4.12'
          provided 'javax:javaee-api:7.0'
+         compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
+         testCompile group: 'org.slf4j', name: 'slf4j-log4j12', version: '1.7.25'
     }
 
     version = '1.0.0-SNAPSHOT'
