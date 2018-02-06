@@ -16,7 +16,7 @@ public class MessageBean implements MessageEJBServiceLocal, MessageEJBServiceRem
 
 	@EJB
 	private MessageSender messageSender;
-
+	
 	@Override
 	public void redirectMessage(Message message) {
 		System.out.println("session bean...");
